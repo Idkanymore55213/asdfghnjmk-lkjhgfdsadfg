@@ -23,7 +23,7 @@ app.post("/submit", async (req, res) => {
 
     try {
         const botghostResponse = await axios.post(
-            "https://api.botghost.com/webhook/1338030060300402688/e3gti17gvfjpej1s7vau", // Replace with correct webhook URL
+            "https://api.botghost.com/webhook/1338030060300402688/e3gti17gvfjpej1s7vau", // Replace with correct webhook
             req.body,
             {
                 headers: {
