@@ -1,26 +1,45 @@
 const express = require("express");
 const cors = require("cors");
+const axios = require("axios"); // Import axios to send requests
 const app = express();
 
 app.use(cors());
 app.use(express.json()); // Ensure the server can parse JSON requests
 
-// Debugging middleware (logs every request)
+// Debugging middleware
 app.use((req, res, next) => {
     console.log(`[${new Date().toISOString()}] ${req.method} request to ${req.url}`);
     console.log("Request Body:", req.body);
     next();
 });
 
-// Handle form submission
-app.post("/submit", (req, res) => {
+// Handle form submission and forward to BotGhost API
+app.post("/submit", async (req, res) => {
     console.log("Received data:", req.body); // Log received data
 
     if (!req.body.variables) {
         return res.status(400).json({ error: "Missing 'variables' field" });
     }
 
-    res.json({ message: "Form received successfully!" });
+    try {
+        const botghostResponse = await axios.post(
+            "https://api.botghost.com/webhook/1338030060300402688/e3gti17gvfjpej1s7vau", // Replace with correct webhook URL
+            req.body,
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "5ecb576597790e7a7e0c9934e819cacc1565e0bfef65479b45432c0548d318c2" // Replace with your actual API key
+                }
+            }
+        );
+
+        console.log("BotGhost API Response:", botghostResponse.data);
+        res.json({ message: "Form data sent to BotGhost successfully!" });
+
+    } catch (error) {
+        console.error("Error sending data to BotGhost:", error.response ? error.response.data : error.message);
+        res.status(500).json({ error: "Failed to send data to BotGhost API" });
+    }
 });
 
 // Start server
