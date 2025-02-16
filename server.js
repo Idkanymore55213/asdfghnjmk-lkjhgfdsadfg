@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(express.json()); // Allows JSON request bodies
-app.use(cors()); // Enables CORS (important for frontend requests)
+app.use(cors());
 
 // Sample Route
 app.post("/submit", (req, res) => {
