@@ -4,7 +4,7 @@ const axios = require("axios"); // Import axios to send requests
 const app = express();
 
 app.use(cors());
-app.use(express.json()); // Ensure the server can parse JSON requests
+app.use(express.json());
 
 // Debugging middleware
 app.use((req, res, next) => {
