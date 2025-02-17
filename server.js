@@ -15,7 +15,7 @@ app.use((req, res, next) => {
 
 // Handle form submission and forward to BotGhost API
 app.post("/submit", async (req, res) => {
-    console.log("Received data:", req.body); // Log received data
+    console.log("Received data:", req.body);
 
     if (!req.body.variables) {
         return res.status(400).json({ error: "Missing 'variables' field" });
